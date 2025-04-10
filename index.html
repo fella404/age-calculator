@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Age Calculator</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <main>
+      <h1>Age Calculator</h1>
+      <form action="">
+        <label for="birthdate">Enter your birthdate:</label>
+        <input type="date" id="birthdate" name="birthdate" required />
+        <button id="calc-btn" type="submit">Calculate</button>
+      </form>
+      <p id="result">19</p>
+    </main>
+    <script src="luxon.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
