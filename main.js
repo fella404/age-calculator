@@ -1,27 +1,37 @@
-const btn = document.getElementById("calc-btn");
-const input = document.getElementById("birthdate");
-const result = document.getElementById("result");
-let selectedDate;
+import { DateTime } from "https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/es6/luxon.min.js";
 
-input.addEventListener("change", () => {
-  selectedDate = input.value;
-});
+function calculateAge(birthdate) {
+  const birthDate = DateTime.fromISO(birthdate);
 
-btn.addEventListener("click", (e) => {
+  const dt = DateTime.now();
+  const diff = dt.diff(birthDate, ["years", "months"]);
+
+  const years = Math.floor(diff.years);
+  const months = Math.floor(diff.months);
+
+  return { years, months };
+}
+
+function handleCalculateClick(e) {
   e.preventDefault();
-  const birthDate = selectedDate.split("-");
 
-  const dt = luxon.DateTime.now();
-  const dur = luxon.Duration.fromObject({
-    year: birthDate[0],
-    month: birthDate[1],
-    day: birthDate[2],
-  });
+  const input = document.getElementById("birthdate");
+  const result = document.getElementById("result");
 
-  const year = dt.minus(dur).year;
-  const month = dt.minus(dur).month;
+  const selectedDate = input.value;
+
+  if (!selectedDate) {
+    result.innerHTML = "<b>Please select a date!</b>";
+    return;
+  }
+
+  const { years, months } = calculateAge(selectedDate);
 
   result.innerHTML = `
-    You are <b>${year} years ${month} months</b> old
-  `;
-});
+      You are <b>${years} years ${months} months</b> old
+    `;
+}
+
+document
+  .getElementById("calc-btn")
+  .addEventListener("click", handleCalculateClick);
